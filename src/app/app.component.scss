@@ -1,0 +1,12 @@
+.main{
+    height: 100vh;
+    
+    .contentSection {
+        width: 100%;
+        border-radius: 5px; 
+        padding: 10px; 
+        box-shadow: var(--boxShadow) 0px 1px 4px;
+        overflow-x: auto;
+
+    }
+}

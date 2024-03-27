@@ -1,0 +1,71 @@
+<div class="task-component main">
+    <div class="m-auto newTask px-3">
+        <form [formGroup]="taskForm" (ngSubmit)="createTask()" class="d-flex flex-column">
+            <h4 class="main-header">Task: </h4>
+            <div class="form-control my-2">
+                <input type="text" id="taskTitle" formControlName="taskTitle" placeholder="Task Title">
+            </div>
+            <p class="mt-2 errMsg"
+                *ngIf="taskForm.get('taskTitle')?.errors != null && taskForm.get('taskTitle')?.touched">
+                Please Enter Task Title!
+            </p>
+            <div class="form-control my-2">
+                <textarea name="taskDesc" rows="4" id="taskDesc" formControlName="taskDesc"
+                    placeholder="Task Description ..."></textarea>
+            </div>
+
+            <div class=" my-2 form-group d-flex flex-column flex-sm-row align-items-sm-center">
+                <label class="label mb-2 mb-sm-0" for="category">Category: </label>
+                <p-dropdown [(ngModel)]="defaultCategory" id="category" formControlName="taskCategory"
+                    [options]="categories" class="form-control"></p-dropdown>
+            </div>
+            <div class=" my-2 form-group d-flex flex-column  flex-sm-row align-items-sm-center"
+                *ngIf="!showStatusDropDown">
+                <label class="label mb-2 mb-sm-0" for="status">Status: </label>
+                <input type="text" class="px-2 form-control statusInput" [readonly]="!showStatusDropDown" value="Open">
+            </div>
+            <div class=" my-2 form-group d-flex flex-column  flex-sm-row align-items-sm-center"
+                *ngIf="showStatusDropDown">
+                <label class="label mb-2 mb-sm-0" for="status">Status: </label>
+                <p-dropdown [(ngModel)]="defaultTaskStatus" id="status" formControlName="taskStatus" [options]="status"
+                    class="form-control">
+                </p-dropdown>
+            </div>
+
+            <div class="my-2 form-group d-flex flex-column  flex-sm-row align-items-sm-center">
+                <label for="date" class="label mb-2 mb-sm-0">Due Date: </label>
+                <p-calendar [showIcon]="true" dateFormat="yy-m-dd" formControlName="taskDate" id="date"
+                    class="form-control" placeholder="Select Date"></p-calendar>
+            </div>
+
+            <h4 class="main-header my-3">SubTasks: </h4>
+            <div class="d-flex justify-content-center">
+                <a class="d-flex justify-content-center align-items-center addNewTask " (click)="addSubTask()">
+                    <i class="bi bi-plus"></i>
+                    Add New SubTask
+                </a>
+            </div>
+
+            <div formArrayName="subTasks">
+                <div *ngFor="let subTask of subTasks.controls; let i = index" class="form-group">
+                    <div class="input-group my-2">
+                        <input formControlName="{{i}}" class="form-control" />
+                        <button type="button" class="btn remove" (click)="removeSubTask(i)">Remove</button>
+                    </div>
+                </div>
+            </div>
+            <app-confirm-dialog [msg]="removeTasksMsg" [fire]="removeTaskReq" (response)="confirmTaskRemoved($event)"
+                *ngIf="removeTaskReq">
+            </app-confirm-dialog>
+            <div class="mb-3 mt-auto d-flex justify-content-center align-items-center"
+                [ngClass]="newTask ? 'newTaskBtn' : 'EditTaskBtn'">
+                <button *ngIf="newTask" type="submit" class="btn mx-2 submit"
+                    [disabled]="!taskForm.valid">Submit</button>
+                <button *ngIf="!newTask" type="button" class="btn delete " (click)="deleteTask()">Delete</button>
+                <button *ngIf="!newTask" type="button" class="btn save" [disabled]="!taskForm.valid" (click)="editTask()">Save Changes</button>
+            </div>
+
+            <app-toast [msg]="message" [fire]="result" *ngIf="result.value" [type]="notification"></app-toast>
+        </form>
+    </div>
+</div>

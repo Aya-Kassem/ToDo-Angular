@@ -1,0 +1,11 @@
+<div class="today container-fluid h-100">
+  <div class="d-flex align-items-center">
+    <h1 class="main-header" style="font-size: 30px">History Tasks</h1>
+    <div class="tasktemplateNum d-flex justify-content-center align-items-center">
+      <span>{{ historyTasks.length }}</span>
+    </div>
+  </div>
+  <div class="row taskRow">
+    <app-task-template [tasksData]="[ { type: 'History', tasks: historyTasks } ]"></app-task-template>
+  </div>
+</div>

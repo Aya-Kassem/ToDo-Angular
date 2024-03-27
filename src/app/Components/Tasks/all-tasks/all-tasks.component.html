@@ -1,0 +1,43 @@
+<div class="container-fluid allTasks h-100">
+    <div class="row mb-4">
+        <div class="d-flex align-items-center">
+            <h1 class="main-header" style="font-size: 30px">All Tasks</h1>
+            <div class="tasktemplateNum d-flex justify-content-center align-items-center">
+                <span>{{ allTasks.length }}</span>
+            </div>
+        </div>
+        <form class="searchForm " [formGroup]="searchForm" (ngSubmit)="searchTasks()">
+            <h4 class="main-header ps-sm-4">Find Task:</h4>
+            <div class="row searchParams m-auto d-flex align-items-center justify-content-center">
+                <div class="col-sm-4  p-1">
+                    <input type="text" name="title" placeholder="Title" formControlName="title" class="px-2">
+                </div>
+                <div class="col-sm-4  p-1">
+                    <p-dropdown id="status" [options]="status" formControlName="status" [showClear]="true"
+                        placeholder="Status"></p-dropdown>
+                </div>
+
+                <div class="col-sm-4  p-1">
+                    <p-calendar selectionMode="range" [showIcon]="true" [readonlyInput]="true" class="form-control"
+                        id="date" formControlName="date" placeholder="From - To"></p-calendar>
+                </div>
+                <div class="col-sm-4 p-1">
+                    <p-dropdown id="category" formControlName="category" placeholder="Category" [showClear]="true"
+                        [options]="categories"></p-dropdown>
+                </div>
+                <div class="col-sm-4  p-1">
+                    <button type="submit">Search</button>
+                </div>
+                <div class="col-sm-4  p-1">
+                    <button type="submit" (click)="reset()">Reset</button>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+
+    <div class="row" style="height: calc(100% - 185px)">
+        <app-task-template *ngIf="tasksLoaded" [tasksData]="[ { type: 'AllTasks', tasks: allTasks } ]"></app-task-template>
+    </div>
+
+</div>

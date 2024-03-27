@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Protest+Riot&display=swap');
+
+.notFound {
+    height: 100vh;
+    width: 100%;
+    padding: 10px;
+
+    .btn {
+        background-color: var(--IconsColor);
+        color: #fff;
+        padding: 6px 40px;
+    }
+
+    .notFoundParagraph {
+        font-size: 25px;
+        font-weight: bold;
+        color: var(--headersColor);
+        @media screen and (max-width: 426px){
+            font-size: 18px;
+        }
+    }
+
+    .err {
+        font-size: 200px;
+        color: var(--IconsColor);
+        font-family: "Montserrat Alternates", sans-serif;
+        font-weight: 600;
+        font-style: italic;
+
+        @media screen and (max-width: 430px){
+            font-size: 120px;
+        }
+
+        @media screen and (min-width: 431px) and (max-width: 460px){
+            font-size: 180px;
+        }
+    }
+}

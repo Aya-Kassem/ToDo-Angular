@@ -1,0 +1,104 @@
+<div class="sideNavbar p-2 d-flex flex-column " id="navbar">
+    <div class="py-4">
+        <!-- Add New Task -->
+        <div class="d-flex justify-content-between align-items-center mb-3 clicable"
+            routerLink="tasks/addNewTask" pTooltip="Add New Task">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-plus-lg iconStyle addNewIcon"></i>
+                <p class="marginLeft">Add New Task</p>
+            </div>
+        </div>
+
+        <!-- All Tasks -->
+        <div class="d-flex justify-content-between align-items-center mb-3 clicable" routerLink="tasks/allTasks"
+            pTooltip="All Tasks">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-list-check iconStyle todayIcon"></i>
+                <p class="marginLeft">All Tasks</p>
+            </div>
+
+            <div class="square d-flex justify-content-center align-items-center">
+                <span>{{ allTasksNum }}</span>
+            </div>
+        </div>
+
+        <!-- Today Tasks -->
+        <div class="d-flex justify-content-between align-items-center mb-3 clicable" routerLink="tasks/todayTasks"
+            pTooltip="Today Tasks">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-clock-history iconStyle todayIcon"></i>
+                <p class="marginLeft">Today</p>
+            </div>
+
+            <div class="square d-flex justify-content-center align-items-center">
+                <span>{{ todayTasksNum }}</span>
+            </div>
+        </div>
+
+        <!-- Upcoming Tasks -->
+        <div class="d-flex justify-content-between align-items-center mb-3 clicable" routerLink="tasks/upcoming"
+            pTooltip="Upcoming Tasks">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-chevron-double-right iconStyle upcomingIcon"></i>
+                <p class="marginLeft">Upcoming</p>
+            </div>
+
+            <div class="square d-flex justify-content-center align-items-center">
+                <span>{{upcomingTasksNum}}</span>
+            </div>
+        </div>
+
+        <!-- History Tasks -->
+        <div class="d-flex justify-content-between align-items-center mb-3 clicable" routerLink="tasks/history"
+            pTooltip="History Tasks">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-archive iconStyle stickyWallIcon"></i>
+                <p class="marginLeft">History Tasks</p>
+            </div>
+
+            <div class="square d-flex justify-content-center align-items-center">
+                <span>{{historyTasksNum}}</span>
+            </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="d-flex justify-content-between align-items-center mb-3 clicable" routerLink="/calendar"
+            pTooltip="Calendar">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-calendar3 iconStyle calendarIcon"></i>
+                <p class="marginLeft">Calendar</p>
+            </div>
+
+            <div class="square d-flex justify-content-center align-items-center">
+                <span>{{calendarEventsNum}}</span>
+            </div>
+        </div>
+
+        <!-- Sticky Wall -->
+        <div class="d-flex justify-content-between align-items-center clicable mb-3" routerLink="/sticky-wall"
+            pTooltip="Sticky Wall">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-sticky iconStyle stickyWallIcon"></i>
+                <p class="marginLeft">Sticky Wall</p>
+            </div>
+
+            <div class="square d-flex justify-content-center align-items-center">
+                <span>{{stickyNotes}}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Setting -->
+    <div class="mt-auto">
+        <div class="d-flex align-items-center clicable mb-2 " pTooltip="Setting" routerLink="/setting">
+            <i class="bi bi-sliders2 iconStyle settingIcon"></i>
+            <p class="marginLeft">Settings</p>
+        </div>
+
+        <div class="d-flex align-items-center clicable" (click)="signOut()" pTooltip="Sign Out">
+            <i class="bi bi-box-arrow-right iconStyle signOutIcon"></i>
+            <p class="marginLeft">Sign Out</p>
+        </div>
+    </div>
+
+</div>

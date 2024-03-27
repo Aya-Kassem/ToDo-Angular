@@ -1,0 +1,14 @@
+.tasktemplateNum {
+    width: 39px;
+    height: 30px;
+    background-color: inherit;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    margin-left: 30px;
+
+    span {
+        font-size: 23px;
+        color: var(--headersColor);
+        font-weight: bold;
+    }
+}

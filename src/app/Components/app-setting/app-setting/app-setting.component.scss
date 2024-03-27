@@ -1,0 +1,74 @@
+.settingForm {
+    input {
+        border: 1px solid;
+        border-color: var(--IconsColor);
+        border-radius: 5px;
+        height: 35px;
+        width: 50%;
+    }
+
+    .defaultBtn {
+        font-weight: 500;
+        background-color: var(--IconsColor);
+        color: #fff;
+        width: 50%;
+    }
+
+    input::placeholder,
+    .p-inputtext{
+        color: rgba(33, 37, 41, 0.7);
+        font-weight: 500;
+    }
+
+    input::placeholder {
+        font-size: 16px;
+    }
+
+    input:focus-visible {
+        outline: none;
+    }
+
+    label {
+        width: 50%;
+        font-weight: 500;
+    }
+
+    .submit {
+        font-weight: 500;
+        background-color: var(--IconsColor);
+        color: #fff;
+    }
+
+    .submit {
+        width: 50%;
+    }
+
+    .errMsg {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--IconsColor);
+    }
+
+    .defaultBtn {
+        text-align: left;
+    }
+
+
+}
+
+@media screen and (max-width: 766px) {
+    .settingForm {
+
+        input,
+        label,
+        p-dropdown,
+        .buttons {
+            width: 80%;
+            margin: auto;
+        }
+
+
+    }
+
+}
+

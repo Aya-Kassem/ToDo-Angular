@@ -1,0 +1,16 @@
+<div class="w-100 d-flex p-2 main" *ngIf="!isLoading" >
+    <div class="navbarSection" *ngIf="userAuthCheck && notFoundPage" >
+        <app-navbar></app-navbar>
+    </div>
+    
+    <div class="contentSection">
+        <router-outlet></router-outlet>
+    </div>
+    
+</div>
+
+<div class="main d-flex justify-content-center align-items-center" *ngIf="isLoading" >
+    <app-spinner></app-spinner>
+</div>
+
+

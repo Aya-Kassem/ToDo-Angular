@@ -1,0 +1,64 @@
+
+.img_container {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: rgb(98,114,84);
+}
+
+.btn,
+.redirectBtn {
+    text-decoration: none;
+}
+
+.btn {
+    background-color: rgb(98,114,84);
+    color: #fff;
+    border-radius: 0.375rem;
+    font-weight: 500;
+}
+
+.header,
+.redirectBtn {
+    color: rgb(98,114,84);
+}
+
+.header {
+    font-size: 30px;
+}
+
+.redirectBtn {
+    cursor: pointer;
+}
+
+.err {
+    color: rgb(220, 53, 69);
+    font-weight: bold;
+}
+
+
+@media screen and (max-width: 768px) {
+    .loggingForm > *{
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 989px) {
+    .loggingForm > *{
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 990px) {
+    .loggingForm > *{
+        width: 80%;
+    }
+}
+.errMsg{
+    color: rgb(220, 53, 69);
+    font-weight: 500;
+}

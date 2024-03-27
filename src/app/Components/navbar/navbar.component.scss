@@ -1,0 +1,64 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.sideNavbar {
+    height: 100%;
+    background-color: var(--lightGrey);
+    border-radius: 5px;
+    transition: width .5s ease-in-out;
+    margin-right: 10px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    box-shadow: var(--boxShadow) 0px 1px 4px;
+
+    .navIcon,
+    .iconStyle {
+        font-size: 17px;
+        padding: 2px 6px 0 6px;
+        border-radius: 3px;
+        transition: all .5s ease-in-out;
+    }
+    .marginLeft {
+        margin-left: 14px;
+        font-weight: 600;
+        color: gray;
+        font-size: 15px;
+    }
+
+}
+
+
+@media screen and (min-width: 900px) {
+    .sideNavbar {
+        width: 300px;
+        .iconStyle,
+        .navIcon {
+            background-color: inherit;
+            color: var(--IconsColor);
+            font-weight: bold;
+        }
+
+        .navIcon {
+            font-size: 25px;
+        }
+    }
+}
+
+@media screen and (max-width: 899px) {
+    .sideNavbar {
+        width: 45px;
+        .iconStyle,
+        .navIcon {
+            background-color: var(--navIconBgColor);
+            color: #fff;
+        }
+        .navIcon {
+            font-size: 17px;
+        }
+    }
+}
+

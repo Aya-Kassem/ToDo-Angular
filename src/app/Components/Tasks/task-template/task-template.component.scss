@@ -1,0 +1,71 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.tasktemplateNum {
+    width: 39px;
+    height: 30px;
+    background-color: inherit;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    margin-left: 30px;
+
+    span {
+        font-size: 23px;
+        color: var(--headersColor);
+        font-weight: bold;
+    }
+}
+
+.noTasks {
+    border-radius: 5px;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--IconsColor);
+}
+
+.taskHolder {
+    box-shadow: var(--boxShadow) 0px 1px 4px;
+    border-radius: 10px;
+
+    .task,
+    .form-check-input {
+        cursor: pointer;
+
+        .taskHeader,
+        .task-details .date,
+        .status {
+            color: gray;
+            font-weight: 500;
+        }
+        .task-details .date,
+        .status {
+            font-size: 15px;
+        }
+        .taskHeader {
+            font-size: 17px;
+        }
+
+        .task-details .date i,
+        .break {
+            color: var(--IconsColor);
+        }
+    }
+
+    .form-check-input {
+        width: 17px;
+        height: 15px;
+    }
+    .form-check-input:focus {
+        box-shadow: none;
+    }
+    .form-check-input:checked {
+        background-color: var(--IconsColor);
+        border-color: var(--IconsColor);
+    }
+    .lineThrough{
+        text-decoration: line-through;
+    }
+}

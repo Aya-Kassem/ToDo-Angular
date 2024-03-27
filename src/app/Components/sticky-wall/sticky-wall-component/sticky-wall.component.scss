@@ -1,0 +1,76 @@
+.stickyWall {
+    width: 100%;
+
+    .stickyNote,
+    .addNote{
+        height: 250px;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        padding: 10px;
+        .heading{
+            width: 100%;
+            // border-bottom: ;
+            .note-heading{
+                height: 100%;
+            }
+            button{
+                border: none;
+                background-color: inherit;       
+            }
+            .saveNote{
+                font-weight: 500;
+                color: #5c5470;
+            }
+        }
+
+        .noteStyle{
+            height: 50px;
+        }
+        .note-description {
+            width: 100%;
+            border: none;
+            overflow-x: auto;
+        }
+        .note-description {
+            resize: none;
+            height: 100%;
+        }
+        .note-heading:focus,
+        .note-description:focus {
+            outline: none;
+            border: none;
+        }
+
+        .noteStyle i, .heading i {
+            font-size: 17px;
+            color: var(--IconsColor);
+            cursor: pointer;
+        }
+        .heading span{
+            width: 60%;
+        }
+        .heading span:focus-visible{
+            outline: none;
+        }
+        /* Hide the default scrollbar */
+        textarea {
+            scrollbar-width: thin;
+            scrollbar-color: transparent transparent;
+            overflow: auto;
+        }
+    }
+
+    .addNote{
+        background-color: var(--lightGrey);
+        .note-description, .note-heading{
+            background-color: var(--lightGrey);
+        }
+    }
+    
+}
+
+.clicked { 
+    color: #fff !important;
+    background-color: var(--IconsColor);
+    border-radius: 3px;
+}

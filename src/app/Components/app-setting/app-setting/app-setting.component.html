@@ -1,0 +1,46 @@
+<div class="container setting h-100">
+    <div class="row h-100">
+        <h3 class="main-header">Settings</h3>
+        <div class="col-md-8 m-auto " style="height: 90%;">
+            <form class="settingForm h-100 d-flex flex-column" [formGroup]="settingForm" (ngSubmit)="setSetting()">
+                <div class="form-group my-3 d-flex flex-column flex-md-row align-items-md-center ">
+                    <label class="label mb-2 mb-md-0" for="category">Add New Category: </label>
+                    <input type="text" name="category" class="px-2" formControlName="category"
+                        placeholder="Separate with Comma">
+                </div>
+
+                <div *ngIf="categoriesExist"
+                    class="my-3 form-group d-flex flex-column flex-md-row align-items-md-center ">
+                    <label class="label mb-2 mb-md-0">Remove Category: </label>
+                    <p-dropdown placeholder="Select Category" [showClear]="true" [options]="userCategories" class="dropDown" formControlName="removeCategory"></p-dropdown>
+                </div>
+
+                <div class="my-3 form-group d-flex flex-column flex-md-row align-items-md-center ">
+                    <label class="label mb-2 mb-md-0" for="calendarView">Change Calendar View: </label>
+                    <p-dropdown [(ngModel)]="currentView" placeholder="Select View" formControlName="calendarView" id="calendarView"
+                        [options]="calendarViews" class="form-control">
+                    </p-dropdown>
+                </div>
+
+                <div class=" my-3 form-group d-flex flex-column flex-md-row align-items-md-center  ">
+                    <label class="label mb-2 mb-md-0" for="color">Change Main Color: </label>
+                    <input type="text" name="color" class="px-2" formControlName="color"
+                        placeholder="Enter Color Name or Code ">
+                </div>
+
+                <p *ngIf="colorErrMsg" class="errMsg">{{colorErrMsg}}</p>
+
+                <div class=" my-4 form-group ">
+                    <div class="buttons d-flex  align-items-md-center">
+                        <button type="button" class="btn defaultBtn me-2 text-center"
+                            (click)="resetSettings()">Reset</button>
+                        <button type="submit" class="btn submit ms-2">Submit</button>
+                    </div>
+                </div>
+
+                <app-toast [msg]="success" [fire]="settingApplied" [type]="notification"
+                    *ngIf="settingApplied.value"></app-toast>
+            </form>
+        </div>
+    </div>
+</div>

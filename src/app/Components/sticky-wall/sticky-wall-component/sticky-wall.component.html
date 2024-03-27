@@ -1,0 +1,54 @@
+<div class="stickyWall container-fluid">
+    <div class="row mb-3">
+        <h4 class="main-header">Sticky Wall</h4>
+    </div>
+    <div class="row allNotes">
+        <div class="col-sm-6 col-md-4 p-0 my-2">
+            <form class="d-flex align-items-center addNote flex-column p-0 mx-1" [formGroup]="noteForm"
+                (ngSubmit)="onSubmit()">
+                <div class="heading border-bottom d-flex align-items-center justify-content-between ">
+                    <p class="saveNote m-0 p-2">Save Note</p>
+                    <button type="submit">
+                        <i class="bi bi-save p-2" type="submit" pTooltip="Save"></i>
+                    </button>
+                </div>
+                <textarea placeholder="Write Your Notes ..." class="note-description px-3 py-2"
+                    formControlName="noteBody"></textarea>
+            </form>
+        </div>
+
+        <div class="col-sm-6 col-md-4 p-0 my-2" *ngFor="let note of allNotes; let i = index">
+            <div class="p-0 stickyNote mx-1 d-flex flex-column">
+                <div class="noteStyle border-bottom mt-auto d-flex align-items-center justify-content-around p-1">
+                    <i class="bi bi-pencil-square" pTooltip="Edit" (click)="editNote(i)"></i>
+                    <i class="bi bi-type-bold px-1" pTooltip="Bold" (click)="boldedText($event)"></i>
+                    <i class="bi bi-type-italic px-1" pTooltip="Italic" (click)="italicText($event)"></i>
+                    <i class="bi bi-trash px-1" (click)="deleteNote(i)" pTooltip="delete"></i>
+                </div>
+
+                <div contenteditable="true" class="note-description px-3 py-2" (mouseup)="getSelectedText()">
+                    {{note.noteBody}}
+                </div>
+
+                
+            </div>
+        </div>
+        <ng-container *ngIf="NoteActionReq.value">
+            <app-confirm-dialog 
+                [msg]="ConfirmMsg" 
+                (response)="confirmAction($event)" 
+                [fire]="NoteActionReq">
+            </app-confirm-dialog>
+        </ng-container>
+
+        <ng-container *ngIf="changesApplied.value">
+            <app-toast 
+                [msg]="success" 
+                [fire]="changesApplied" 
+                [type]="notification" 
+                (response)="toastClosed($event)">
+            </app-toast>
+        </ng-container>
+
+    </div>
+</div>

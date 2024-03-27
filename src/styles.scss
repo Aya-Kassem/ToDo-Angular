@@ -1,0 +1,383 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+// --navIconBgColor: rgba(247, 7, 118, .9);
+// --IconsColor: rgb(247, 7, 118);
+// --boxShadow: rgba(247, 7, 118, .2);
+:root {
+    --lightGrey: rgba(238, 238, 238, 0.4);
+    --navIconBgColor: rgba(98,114,84, .9);
+    --IconsColor: rgba(98,114,84,1);
+    --boxShadow: rgba(98,114,84, .2);
+    --headersColor: #64616c;
+    --todayDateColor: rgba(98,114,84, .1)
+}
+
+
+.square {
+    width: 25px;
+    height: 25px;
+    background-color: var(--IconsColor);
+    color: #fff;
+    border-radius: 3px;
+    text-align: center;
+
+    span {
+        font-size: 12px;
+        font-weight: bold;
+    }
+}
+
+.today {
+    .square {
+        width: 17px;
+        height: 17px;
+        background-color: var(--IconsColor);
+        color: #fff;
+        border-radius: 3px;
+        text-align: center;
+
+        span {
+            font-size: 12px;
+            font-weight: bold;
+        }
+    }
+}
+
+.clicable {
+    cursor: pointer;
+}
+
+
+.main-header,
+.fc .fc-toolbar-title {
+    font-weight: 600;
+    color: var(--headersColor);
+}
+
+// Scroll Bar Styling ....
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+    background-color: var(--navIconBgColor);
+    border-radius: 5px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+/* Custom scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
+
+// Calendar
+.fc.fc-theme-standard .fc-toolbar .fc-button,
+.fc.fc-theme-standard .fc-toolbar .fc-button:disabled,
+.fc.fc-theme-standard .fc-toolbar .fc-button:enabled:active {
+    background-color: var(--navIconBgColor);
+    border: 1px solid var(--navIconBgColor);
+}
+
+
+.fc.fc-theme-standard .fc-toolbar .fc-button:enabled:hover {
+    background-color: var(--IconsColor);
+    border: 1px solid var(--IconsColor);
+}
+
+.fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-right,
+.fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-left {
+    font-size: 25px;
+}
+
+.fc.fc-theme-standard .fc-toolbar .fc-button-group .fc-button:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-right,
+.fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+full-calendar a {
+    text-decoration: none;
+}
+
+.fc .fc-daygrid-day-frame {
+    cursor: pointer;
+}
+
+.fc.fc-theme-standard .fc-toolbar .fc-button:focus,
+.fc.fc-theme-standard .fc-toolbar .fc-button:enabled:active:focus {
+    box-shadow: none;
+}
+
+.fc.fc-theme-standard a {
+    color: var(--IconsColor);
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: rgba(222, 226, 230, .5);
+}
+
+.fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event {
+    background-color: var(--navIconBgColor);
+    border-color: var(--navIconBgColor);
+    border-radius: 3px;
+}
+
+.fc-daygrid-block-event .fc-event-title {
+    color: #fff;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 500px) {
+    body>app-root>div>div.contentSection>app-calendar>full-calendar>div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr>div:nth-child(3)>button {
+        margin-top: 5px;
+    }
+}
+
+.task-component,
+.setting,
+.allTasks {
+    p-dropdown>div,
+    p-calendar>span {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    p-calendar>span>input,
+    p-calendar>span>button {
+        width: 100%;
+        height: 100%;
+    }
+
+    p-calendar .p-inputtext:enabled:hover,
+    p-calendar .p-inputtext:enabled:focus,
+    p-calendar>span>input,
+    p-dropdown .p-dropdown,
+    .p-dropdown:not(.p-disabled):hover,
+    .p-dropdown:not(.p-disabled).p-focus,
+    .form-control:focus {
+        border-color: var(--IconsColor)
+    }
+
+    p-calendar .p-inputtext:enabled:focus,
+    .p-dropdown:not(.p-disabled).p-focus,
+    .form-control:focus,
+    .p-button:focus {
+        box-shadow: none;
+    }
+
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+        color: var(--IconsColor);
+        background-color: var(--lightGrey);
+    }
+
+    .form-group {
+        border: none;
+    }
+
+    p-calendar .p-button,
+    p-calendar .p-button:hover {
+        border-color: var(--IconsColor);
+        background-color: var(--IconsColor);
+    }
+
+    @media screen and (max-width: 500px) {
+        p-calendar>span>div {
+            left: -100px !important;
+        }
+        body>app-root>div>div.contentSection>app-calendar>full-calendar>div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr>div:nth-child(3)>button {
+            margin-top: 0;
+        }
+    }
+
+    @media screen and (min-width: 902px) and (max-width: 970px) {
+        p-calendar>span>div {
+            left: -50px !important;
+        }
+    }
+}
+.allTasks{
+    p-calendar {
+        height: 35px;
+        width: 100%;
+        padding: 0;
+        border: none;
+        width: 100%;
+    }
+    @media screen and (min-width: 902px) and (max-width: 970px) {
+        p-calendar>span>div {
+            left: -120px !important;
+        }
+    }
+    @media screen and (min-width: 971px) {
+        p-calendar>span>div {
+            left: -19px !important;
+        }
+    }
+}
+.allTasks{
+    p-dropdown{
+        display: inline-block;
+        width: 100%;
+        height: 35px;
+    }
+}
+.setting {
+    p-dropdown {
+        height: 35px;
+        width: 50%;
+        padding: 0;
+        border: none;
+    }
+}
+
+.italic {
+    font-style: italic !important;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon {
+    display: none !important;
+}
+
+.p-toast .p-toast-message .p-toast-message-content {
+    padding: 0;
+    align-items: center !important;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
+    margin: 0;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-text {
+    margin: 0 1rem 0 1rem;
+}
+
+.p-toast-top-right {
+    top: 10px !important;
+    right: 10px !important;
+}
+
+.p-toast {
+    width: fit-content !important;
+}
+
+p-toast>div>p-toastitem>div {
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.notification {
+    p-toast>div>p-toastitem>div {
+        color: var(--IconsColor) !important;
+        border-left: 6px solid var(--IconsColor) !important;
+        background-color: #fff !important;
+    }
+
+    .p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+        display: none !important;
+    }
+}
+
+.error {
+    p-toast>div>p-toastitem>div {
+        color: rgb(220, 53, 69) !important;
+        border-left: 6px solid rgb(220, 53, 69) !important;
+        background-color: #fff !important;
+    }
+
+    .p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+        color: rgb(220, 53, 69) !important;
+    }
+
+    .p-toast .p-toast-message .p-toast-icon-close:focus {
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .6)
+    }
+}
+
+.p-tooltip .p-tooltip-text {
+    background-color: var(--headersColor) !important;
+    color: #fff !important;
+
+    height: fit-content;
+    padding: 4px 10px;
+    font-size: 14px;
+}
+
+.p-dialog.p-confirm-dialog .p-confirm-dialog-message{
+    font-weight: 500;
+}
+
+.p-dialog .p-dialog-footer > button{
+    background-color: var(--IconsColor) !important;
+    color: #fff !important;
+    border: none;
+    padding: 0.4rem 1.1rem;
+}
+.setting .p-button:focus-visible{
+    outline: none;
+}
+.p-button:focus{
+    box-shadow: none !important;
+}
+.taskRow{
+	height: calc(100% - 46px);
+}
+@media screen and (max-width: 750px){
+    .taskTemplate,
+    .searchForm > .searchParams {
+        width: 100%;
+    }
+}
+@media screen and (min-width: 751px) and (max-width: 900px){
+    .taskTemplate,
+    .searchForm > .searchParams {
+        width: 90%;
+    }
+}
+@media screen and (min-width: 1060px) and (max-width: 1200px) {
+    .taskTemplate,
+    .searchForm > .searchParams {
+        width: 80%;
+    }
+}
+@media screen and (min-width: 1200px){
+    .taskTemplate,
+    .searchForm > .searchParams{
+        width: 70%;
+    }
+}

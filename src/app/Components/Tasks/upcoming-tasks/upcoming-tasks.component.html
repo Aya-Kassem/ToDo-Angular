@@ -1,0 +1,12 @@
+<div class="container-fluid h-100">
+    <div class="d-flex align-items-center">
+        <h1 class="main-header" style="font-size: 30px">Upcoming</h1>
+        <div class="tasktemplateNum d-flex justify-content-center align-items-center">
+            <span>{{ allTasksNum }}</span>
+        </div>
+    </div>
+    <div class="row taskRow pt-3" >
+        <app-task-template *ngIf="weekTasksLoaded" [tasksData]="[{ type: 'This-Week', tasks: weekTasks }]"></app-task-template>
+    </div>
+
+</div>
