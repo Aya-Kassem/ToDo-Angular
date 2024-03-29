@@ -38,7 +38,7 @@
                     class="form-control" placeholder="Select Date"></p-calendar>
             </div>
 
-            <h4 class="main-header my-3">SubTasks: </h4>
+            <h4 class="header my-3">SubTasks: </h4>
             <div class="d-flex justify-content-center">
                 <a class="d-flex justify-content-center align-items-center addNewTask " (click)="addSubTask()">
                     <i class="bi bi-plus"></i>
@@ -57,7 +57,7 @@
             <app-confirm-dialog [msg]="removeTasksMsg" [fire]="removeTaskReq" (response)="confirmTaskRemoved($event)"
                 *ngIf="removeTaskReq">
             </app-confirm-dialog>
-            <div class="mb-3 mt-auto d-flex justify-content-center align-items-center"
+            <div class="pb-3 pb-sm-0 mt-auto d-flex justify-content-center align-items-center"
                 [ngClass]="newTask ? 'newTaskBtn' : 'EditTaskBtn'">
                 <button *ngIf="newTask" type="submit" class="btn mx-2 submit"
                     [disabled]="!taskForm.valid">Submit</button>

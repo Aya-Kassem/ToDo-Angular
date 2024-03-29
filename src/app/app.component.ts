@@ -85,10 +85,6 @@ export class AppComponent {
                 route = route.firstChild;
             }
             const isNotFound = route.snapshot.component?.name === 'NotFoundComponent' || route.snapshot.component?.name === 'C';
-            console.log(route.snapshot);
-            console.log(route.snapshot.component);
-            console.log(route.snapshot.component?.name);
-            console.log(isNotFound); 
             this.notFoundPage = !isNotFound
         });
 

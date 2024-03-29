@@ -21,32 +21,23 @@
             <div class="p-0 stickyNote mx-1 d-flex flex-column">
                 <div class="noteStyle border-bottom mt-auto d-flex align-items-center justify-content-around p-1">
                     <i class="bi bi-pencil-square" pTooltip="Edit" (click)="editNote(i)"></i>
-                    <i class="bi bi-type-bold px-1" pTooltip="Bold" (click)="boldedText($event)"></i>
-                    <i class="bi bi-type-italic px-1" pTooltip="Italic" (click)="italicText($event)"></i>
+                    <i class="bi bi-type-bold px-1" pTooltip="Bold" (click)="boldedText($event, i)"></i>
+                    <i class="bi bi-type-italic px-1" pTooltip="Italic" (click)="italicText($event, i)"></i>
                     <i class="bi bi-trash px-1" (click)="deleteNote(i)" pTooltip="delete"></i>
                 </div>
 
-                <div contenteditable="true" class="note-description px-3 py-2" (mouseup)="getSelectedText()">
+                <div class="note note-description px-3 py-2" (mouseup)="getSelectedText()">
                     {{note.noteBody}}
                 </div>
-
-                
             </div>
         </div>
         <ng-container *ngIf="NoteActionReq.value">
-            <app-confirm-dialog 
-                [msg]="ConfirmMsg" 
-                (response)="confirmAction($event)" 
-                [fire]="NoteActionReq">
+            <app-confirm-dialog [msg]="ConfirmMsg" (response)="confirmAction($event)" [fire]="NoteActionReq">
             </app-confirm-dialog>
         </ng-container>
 
         <ng-container *ngIf="changesApplied.value">
-            <app-toast 
-                [msg]="success" 
-                [fire]="changesApplied" 
-                [type]="notification" 
-                (response)="toastClosed($event)">
+            <app-toast [msg]="success" [fire]="changesApplied" [type]="notification" (response)="toastClosed($event)">
             </app-toast>
         </ng-container>
 

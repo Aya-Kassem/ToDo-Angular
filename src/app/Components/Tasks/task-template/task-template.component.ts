@@ -1,6 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { SharedService } from 'src/app/Services/shared.service';
 import { TasksService } from 'src/app/Services/tasks.service';
 import { Task } from '../task';
@@ -14,12 +14,15 @@ export class TaskTemplateComponent {
     @Input() tasksData: { type: string, tasks: Task[] }[] = [];
     currentUrl!: string;
     showContent: boolean = false;
-    closeTaskConfirmMsg: string = 'Are You Sure You Want to Close This Task?!';
+    closeTaskConfirmMsg!: string;
     closeTaskReq: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     taskIndex!: number;
+    message!: string;
+    result: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    notification: string = 'notification';
 
 
-    constructor(private _Router: Router, private _TaskService: TasksService, private _SharedService :SharedService) { }
+    constructor(private _Router: Router, private _TaskService: TasksService, private _SharedService: SharedService) { }
     ngOnInit(): void {
         this.currentUrl = this._Router.url;
         setTimeout(() => {
@@ -32,33 +35,74 @@ export class TaskTemplateComponent {
         this._Router.navigate(['tasks/addNewTask'], { queryParams: { index, url } })
     }
 
-    completeTask(i: number) {
+    completeTask(i: number, status: string) {
         this.taskIndex = i;
-        this.closeTaskReq.next(true);
-        let el = document.querySelector(`#header-${this.taskIndex}`) as HTMLElement;
-        el.classList.contains('lineThrough') ? el.classList.remove('lineThrough') : el.classList.add('lineThrough');
+        status === 'Closed' ? this.deleteTask() : this.closeTask()
     }
 
-    confirmCloseTask(response: boolean) {
+    userResponse(response: boolean) {
         if (response) {
             let task = this.tasksData[0].tasks.filter((el) => {
                 return el.index === this.taskIndex
             })[0]
 
-            task.taskStatus = 'Closed';
-            this._TaskService.editTask(this.taskIndex, task).subscribe({
-                next: (res) => this._SharedService.getAllData(),
-                complete: () => {
-                    this._Router.navigate(['tasks/history'])
-                }
-            })
+            task.taskStatus === 'Closed' ? this.confirmDelete() : this.confirmClose(task)
         }else{
-            let taskTitle = document.querySelector(`#header-${this.taskIndex}`) as HTMLElement;
-            let taskCheckBox = document.querySelector(`#checkBox-${this.taskIndex}`) as HTMLElement;
-            taskTitle.classList.contains('lineThrough') ? taskTitle.classList.remove('lineThrough') : taskTitle.classList.add('lineThrough');
-            taskCheckBox.style.cssText = 'background-color: inherit; border-color: #dee2e6';
+            this.noActionTaken()
         }
     }
 
+    closeTask() {
+        this.closeTaskConfirmMsg = 'Are You Sure You Want to Close This Task?!';
+        this.closeTaskReq.next(true);
+        this.taskLineThroughStyle();
+    }
+
+    deleteTask() {
+        this.closeTaskConfirmMsg = 'Are You Sure You Want to Delete This Task?!';
+        this.closeTaskReq.next(true);
+        this.taskLineThroughStyle();
+    }
+
+    confirmClose(currentTask: Task) {
+        currentTask.taskStatus = 'Closed';
+        this._TaskService.editTask(this.taskIndex, currentTask).subscribe({
+            next: (res) => {
+                this.message = 'Task Closed Successfully!';
+                this.result.next(true);
+            },
+            complete: () => {
+                setTimeout(() => {
+                    this._SharedService.getAllData()
+                    this._Router.navigate(['tasks/history'])
+                }, 1200)
+            }
+        })
+    }
+    confirmDelete() {
+        this._TaskService.deleteTask(this.taskIndex).subscribe({
+            next: (res) => {
+                this.message = 'Task Deleted Successfully!';
+                this.result.next(true);
+                this._SharedService.getAllData()
+            },
+            error: (e) => { return throwError(() => new Error('Error While Deleteing Task: ', e)) }
+        })
+    }
+
+    taskLineThroughStyle() {
+        let el = document.querySelector(`#header-${this.taskIndex}`) as HTMLElement;
+        let taskCheckBox = document.querySelector(`#checkBox-${this.taskIndex}`) as HTMLElement;
+        el.classList.add('lineThrough');
+        taskCheckBox.style.cssText = 'background-color: var(--IconsColor); border-color: var(--IconsColor)';
+    }
+
+    noActionTaken() {
+        let el = document.querySelector(`#header-${this.taskIndex}`) as HTMLElement;
+        let taskCheckBox = document.querySelector(`#checkBox-${this.taskIndex}`) as HTMLElement;
+        el.classList.remove('lineThrough') 
+        taskCheckBox.style.cssText = 'background-color: inherit; border-color: #dee2e6';
+    }
 
 }
+

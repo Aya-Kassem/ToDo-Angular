@@ -63,11 +63,14 @@ body {
 
 
 .main-header,
+.header,
 .fc .fc-toolbar-title {
     font-weight: 600;
     color: var(--headersColor);
 }
-
+.header{
+    font-size: 25px;
+}
 // Scroll Bar Styling ....
 /* Track */
 ::-webkit-scrollbar-track {
@@ -210,10 +213,11 @@ full-calendar a {
         border-color: var(--IconsColor);
         background-color: var(--IconsColor);
     }
-
+}
+.task-component{
     @media screen and (max-width: 500px) {
         p-calendar>span>div {
-            left: -100px !important;
+            left: -27px !important;
         }
         body>app-root>div>div.contentSection>app-calendar>full-calendar>div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr>div:nth-child(3)>button {
             margin-top: 0;
@@ -234,14 +238,29 @@ full-calendar a {
         border: none;
         width: 100%;
     }
-    @media screen and (min-width: 902px) and (max-width: 970px) {
+    @media screen and (max-width: 500px) {
         p-calendar>span>div {
-            left: -120px !important;
+            left: -27px !important;
+        }
+        // body>app-root>div>div.contentSection>app-calendar>full-calendar>div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr>div:nth-child(3)>button {
+        //     margin-top: 0;
+        // }
+    }
+    @media screen and (min-width: 576px) and (max-width: 767px) {
+        p-calendar>span>div {
+            left: -125px !important;
         }
     }
-    @media screen and (min-width: 971px) {
+
+    @media screen and (min-width: 770px) and (max-width: 900px){
         p-calendar>span>div {
-            left: -19px !important;
+            left: -175px !important;
+        }
+    }
+
+    @media screen and (min-width: 900px){
+        p-calendar>span>div {
+            left: -210px !important;
         }
     }
 }

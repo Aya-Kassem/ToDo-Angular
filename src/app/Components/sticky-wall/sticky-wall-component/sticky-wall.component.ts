@@ -23,7 +23,7 @@ export class StickyWallComponent {
     ConfirmMsg!: string;
     NoteActionReq: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     changesApplied: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    
+
     notification: string = 'notification';
     success!: string;
     toastResponse!: boolean;
@@ -41,16 +41,15 @@ export class StickyWallComponent {
 
     getSelectedText() {
         let selection = window.getSelection();
-
         if (selection) {
             this.rangeAt = selection.getRangeAt(0);
             this.selectedText = this.rangeAt.toString();
         }
-
     }
-    
+
     getElementAndStyle(e: MouseEvent, style: string) {
         let element = e.target as HTMLElement;
+        // console.log('aa -> '+ element.);
         let userStyle, defaultStyle;
 
         if (style == 'bold') {
@@ -64,7 +63,7 @@ export class StickyWallComponent {
 
         return { element, userStyle, defaultStyle };
     }
-    
+
     applyStyle(style: string, el: HTMLElement) {
         if (this.selectedText && this.rangeAt && this.spanElement) {
             const clonedSpan = this.spanElement.cloneNode() as HTMLSpanElement;
@@ -79,7 +78,7 @@ export class StickyWallComponent {
             this.rangeAt = null;
         }
     }
-    
+
     removeStyle(style: string, el: HTMLElement) {
         if (this.selectedText && this.rangeAt && this.spanElement) {
             const clonedSpan = this.spanElement.cloneNode() as HTMLSpanElement;
@@ -95,16 +94,16 @@ export class StickyWallComponent {
         }
     }
 
-    boldedText(e: MouseEvent) {
+    boldedText(e: MouseEvent, i: number) {
+        
         let userSelection = this.getElementAndStyle(e, 'bold');
-
         userSelection.element.classList.contains('clicked') ?
             this.removeStyle(userSelection.defaultStyle!, userSelection.element) :
             this.applyStyle(userSelection.userStyle!, userSelection.element);
 
     }
 
-    italicText(e: MouseEvent) {
+    italicText(e: MouseEvent, i: number) {
         let userSelection = this.getElementAndStyle(e, 'italic');
 
         userSelection.element.classList.contains('clicked') ?
@@ -125,10 +124,10 @@ export class StickyWallComponent {
     }
 
     onSubmit() {
-        const noteBody: string = this.noteForm.value.noteBody!;
+        const noteBody: string = this.noteForm.value.noteBody!;      
         let editNote;
 
-        if(this.noteIndex != null){
+        if (this.noteIndex != null) {
             editNote = this.allNotes[this.noteIndex];
         }
 
@@ -136,15 +135,15 @@ export class StickyWallComponent {
             editNote.noteBody = noteBody;
         }
         if (noteBody && !editNote) {
-            this.allNotes.push({  noteBody });
+            this.allNotes.push({ noteBody });
         }
-       
+
         this._NavService.setNotes(JSON.stringify(this.allNotes))
         this.noteForm.reset();
         this.noteIndex = null;
     }
 
-    confirmAction(response: boolean) {   
+    confirmAction(response: boolean) {
         this.NoteActionReq.next(false)
         if (response) {
             this.success = 'Note Deleted Successfully';
@@ -154,9 +153,11 @@ export class StickyWallComponent {
         }
     }
 
-    toastClosed(val: boolean){      
-        if(val) this.changesApplied.next(false);
+    toastClosed(val: boolean) {
+        if (val) this.changesApplied.next(false);
         this.noteIndex = null
     }
 
+    
+   
 }

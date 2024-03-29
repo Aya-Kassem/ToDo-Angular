@@ -1,5 +1,5 @@
-<ng-container *ngFor="let taskType of tasksData" >
-    <div class="container-fluid h-100"  >
+<ng-container *ngFor="let taskType of tasksData">
+    <div class="container-fluid h-100">
         <div class="row" *ngIf="showContent">
             <div class="d-flex align-items-center" *ngIf="currentUrl === '/tasks/upcoming' ">
                 <h1 class="main-header" style="font-size: 23px;">
@@ -10,20 +10,19 @@
                 No Tasks {{ taskType.type === 'This-Week'? 'This Week' : taskType.type === 'Today' ? taskType.type : ''
                 }}!
             </p>
-            <div class="taskTemplate" *ngIf="taskType.tasks.length" 
-                [ngClass] = " {'m-auto': currentUrl === '/tasks/allTasks'} ">
+            <div class="taskTemplate" *ngIf="taskType.tasks.length"
+                [ngClass]=" {'m-auto': currentUrl === '/tasks/allTasks'} ">
                 <div class="mx-0">
                     <div class="taskHolder px-3 py-2 d-flex my-3 align-items-center"
                         *ngFor="let task of taskType.tasks">
-                        <input
-                            [ngClass] = " {'d-none': currentUrl === '/tasks/history'} " 
-                            class="form-check-input" type="checkbox" [attr.id]="'checkBox-'+task.index"
-                            value="option1" (click)="completeTask(task.index)">
+                        <input class="form-check-input" type="checkbox" [attr.id]="'checkBox-'+task.index"
+                            value="option1" (click)="completeTask(task.index, task.taskStatus)">
                         <ng-container *ngIf="taskIndex === task.index">
-                            <app-confirm-dialog [msg]="closeTaskConfirmMsg" (response)="confirmCloseTask($event)"
+                            <app-confirm-dialog [msg]="closeTaskConfirmMsg" (response)="userResponse($event)"
                                 *ngIf="closeTaskReq" [fire]="closeTaskReq">
                             </app-confirm-dialog>
                         </ng-container>
+
                         <div class="ms-3 ms-sm-0 task w-100 d-flex flex-column flex-sm-row align-items-sm-center "
                             (click)="showTaskDetails(task.index)">
                             <p class="taskHeader ms-sm-2" [attr.id]="'header-'+task.index">{{ task.taskTitle.length > 20
@@ -38,9 +37,13 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
+            <app-toast *ngIf="result.value" [msg]="message" [fire]="result" [type]="notification">
+            </app-toast>
         </div>
+
         <div class="row h-100 d-flex justify-content-center align-items-center " *ngIf="!showContent">
             <app-spinner class="text-center"></app-spinner>
         </div>
