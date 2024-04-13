@@ -13,6 +13,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AddNewTaskComponent } from "./add-new-task/add-new-task.component";
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
+import { TooltipModule } from 'primeng/tooltip';
+import { AppDialogModule } from "src/app/Shared/dialog/dialog.module";
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { DropdownModule } from 'primeng/dropdown';
         AppToastModule,
         AppConfirmDialogModule,
         DropdownModule,
-        CalendarModule
+        CalendarModule,
+        TooltipModule,
+        AppDialogModule
     ],
     exports: [
         TaskTemplateComponent,

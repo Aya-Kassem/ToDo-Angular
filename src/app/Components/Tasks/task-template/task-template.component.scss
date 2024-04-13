@@ -61,10 +61,10 @@
     .form-check-input:focus {
         box-shadow: none;
     }
-    // .form-check-input:checked {
-    //     background-color: var(--IconsColor);
-    //     border-color: var(--IconsColor);
-    // }
+    .checkBoxStyle {
+        background-color: var(--IconsColor);
+        border-color: var(--IconsColor);
+    }
     .lineThrough{
         text-decoration: line-through;
     }

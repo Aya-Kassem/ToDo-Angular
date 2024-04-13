@@ -1,3 +1,8 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 .stickyWall {
     width: 100%;
 
@@ -9,10 +14,7 @@
         padding: 10px;
         .heading{
             width: 100%;
-            // border-bottom: ;
-            .note-heading{
-                height: 100%;
-            }
+            
             button{
                 border: none;
                 background-color: inherit;       
@@ -24,7 +26,7 @@
         }
 
         .noteStyle{
-            height: 50px;
+            height: 40px;
         }
         .note-description {
             width: 100%;
@@ -44,6 +46,8 @@
         .noteStyle i, .heading i {
             font-size: 17px;
             color: var(--IconsColor);
+        }
+        .noteStyle i:not(.check), .heading i{
             cursor: pointer;
         }
         .heading span{
@@ -74,3 +78,11 @@
     background-color: var(--IconsColor);
     border-radius: 3px;
 }
+
+.bold{
+    font-weight: bold;
+}
+.italic{
+    font-style: italic;
+}
+

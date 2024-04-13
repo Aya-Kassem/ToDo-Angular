@@ -10,16 +10,16 @@ import { AuthService } from './auth.service';
 export class TasksService {
   userToken!: string;
   email!: string;
-  constructor( private _HttpClient: HttpClient ) { }
+  constructor(private _HttpClient: HttpClient) { }
 
-  userDatabaseCheck(){
+  userDatabaseCheck() {
     let databaseExist = this._HttpClient.get('https://todo-3dfa9-default-rtdb.firebaseio.com/allData.json');
     return databaseExist
   }
 
-  createUserDatabase(){
+  createUserDatabase() {
     let request = {
-      [this.userToken]: {'user': {'id': this.userToken, 'email': this.email} }
+      [this.userToken]: { 'user': { 'id': this.userToken, 'email': this.email } }
     };
     this._HttpClient.patch('https://todo-3dfa9-default-rtdb.firebaseio.com/allData.json', request).subscribe()
   }
@@ -46,6 +46,6 @@ export class TasksService {
     return this._HttpClient.delete(url);
   }
 
-  // edit user id in database with the one in localstoarge if same email
-  // https://todo-3dfa9-default-rtdb.firebaseio.com/allData/RlRdybYKwJY6TIfIDeVtfxJShU42.json
+  
+
 }

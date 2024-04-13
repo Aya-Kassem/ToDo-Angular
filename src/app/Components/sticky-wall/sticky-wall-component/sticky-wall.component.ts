@@ -15,6 +15,7 @@ export class StickyWallComponent {
 
     allNotes: { noteBody: string }[] = [];
     selectedText!: string;
+    selectedElement!: HTMLElement;
     rangeAt!: Range | null;
     header!: string;
     body!: string;
@@ -36,85 +37,15 @@ export class StickyWallComponent {
         this._NavService.getNotes().subscribe(notes => {
             this.allNotes = notes ? JSON.parse(notes) : []
         })
-
-    }
-
-    getSelectedText() {
-        let selection = window.getSelection();
-        if (selection) {
-            this.rangeAt = selection.getRangeAt(0);
-            this.selectedText = this.rangeAt.toString();
-        }
-    }
-
-    getElementAndStyle(e: MouseEvent, style: string) {
-        let element = e.target as HTMLElement;
-        // console.log('aa -> '+ element.);
-        let userStyle, defaultStyle;
-
-        if (style == 'bold') {
-            userStyle = 'font-weight: bold';
-            defaultStyle = 'font-weight: normal';
-        }
-        if (style == 'italic') {
-            userStyle = 'font-style: italic';
-            defaultStyle = 'font-style: normal';
-        }
-
-        return { element, userStyle, defaultStyle };
-    }
-
-    applyStyle(style: string, el: HTMLElement) {
-        if (this.selectedText && this.rangeAt && this.spanElement) {
-            const clonedSpan = this.spanElement.cloneNode() as HTMLSpanElement;
-            clonedSpan.style.cssText = style;
-            clonedSpan.textContent = this.selectedText;
-
-            el.classList.add('clicked');
-            this.rangeAt.deleteContents();
-            this.rangeAt.insertNode(clonedSpan);
-
-            this.selectedText = '';
-            this.rangeAt = null;
-        }
-    }
-
-    removeStyle(style: string, el: HTMLElement) {
-        if (this.selectedText && this.rangeAt && this.spanElement) {
-            const clonedSpan = this.spanElement.cloneNode() as HTMLSpanElement;
-            clonedSpan.style.cssText = style;
-            clonedSpan.textContent = this.selectedText;
-
-            el.classList.remove('clicked');
-            this.rangeAt.deleteContents();
-            this.rangeAt.insertNode(clonedSpan);
-
-            this.selectedText = '';
-            this.rangeAt = null;
-        }
-    }
-
-    boldedText(e: MouseEvent, i: number) {
-        
-        let userSelection = this.getElementAndStyle(e, 'bold');
-        userSelection.element.classList.contains('clicked') ?
-            this.removeStyle(userSelection.defaultStyle!, userSelection.element) :
-            this.applyStyle(userSelection.userStyle!, userSelection.element);
-
-    }
-
-    italicText(e: MouseEvent, i: number) {
-        let userSelection = this.getElementAndStyle(e, 'italic');
-
-        userSelection.element.classList.contains('clicked') ?
-            this.removeStyle(userSelection.defaultStyle!, userSelection.element) :
-            this.applyStyle(userSelection.userStyle!, userSelection.element);
     }
 
     editNote(i: number) {
+        let note = document.querySelector(`[note="noteBody-${i}"]`) as HTMLDivElement;
         let editNote = this.allNotes[i];
         this.noteIndex = i;
-        this.noteForm.controls['noteBody'].setValue(editNote.noteBody)
+        editNote.noteBody = note.innerHTML;
+        this._NavService.setNotes(JSON.stringify(this.allNotes));
+        this.hideSpinner(i)
     }
 
     deleteNote(i: number) {
@@ -123,8 +54,9 @@ export class StickyWallComponent {
         this.NoteActionReq.next(true);
     }
 
-    onSubmit() {
-        const noteBody: string = this.noteForm.value.noteBody!;      
+    createNote() {
+        this.getUserText();
+        const noteBody: string = this.noteForm.value.noteBody!;
         let editNote;
 
         if (this.noteIndex != null) {
@@ -134,6 +66,7 @@ export class StickyWallComponent {
         if (noteBody && editNote) {
             editNote.noteBody = noteBody;
         }
+
         if (noteBody && !editNote) {
             this.allNotes.push({ noteBody });
         }
@@ -158,6 +91,27 @@ export class StickyWallComponent {
         this.noteIndex = null
     }
 
-    
-   
+    getUserText() {
+        let description = document.querySelector('.description') as HTMLDivElement;
+        this.noteForm.controls['noteBody'].setValue(description.innerHTML);
+    }
+
+    saveNoteChanges(i: number) {
+        setTimeout(() => this.editNote(i), 1500);
+    }
+
+    showSpinner(i: number) {
+        let check = document.querySelector(`[id="check-${i}"]`) as HTMLElement;
+        check.classList.add('d-none');
+        let spinner = document.querySelector(`[id="spinner-${i}"]`) as HTMLDivElement;
+        spinner.classList.remove('d-none');
+        this.saveNoteChanges(i)
+    }
+
+    hideSpinner(i: number) {
+        let spinner = document.querySelector(`[id="spinner-${i}"]`) as HTMLDivElement;
+        let check = document.querySelector(`[id="check-${i}"]`) as HTMLElement;
+        check.classList.remove('d-none');
+        spinner.classList.add('d-none');
+    }
 }

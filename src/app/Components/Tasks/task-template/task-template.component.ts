@@ -20,7 +20,7 @@ export class TaskTemplateComponent {
     message!: string;
     result: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     notification: string = 'notification';
-
+    showDialog: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor(private _Router: Router, private _TaskService: TasksService, private _SharedService: SharedService) { }
     ngOnInit(): void {
@@ -31,13 +31,14 @@ export class TaskTemplateComponent {
     }
 
     showTaskDetails(index: number) {
-        let url = this._Router.url.split('/')[1];
+        let url = this._Router.url.split('/')[2];
         this._Router.navigate(['tasks/addNewTask'], { queryParams: { index, url } })
     }
 
-    completeTask(i: number, status: string) {
-        this.taskIndex = i;
-        status === 'Closed' ? this.deleteTask() : this.closeTask()
+    completeTask(task: Task) {
+        this.taskIndex = task.index;
+        const status = task.taskStatus;
+        status === 'Closed' ? this.deleteTask() : this.checkTaskChildren(task)
     }
 
     userResponse(response: boolean) {
@@ -46,6 +47,7 @@ export class TaskTemplateComponent {
                 return el.index === this.taskIndex
             })[0]
 
+            // task.taskStatus === 'Closed' ? this.confirmDelete() : this.checkTaskChildren(task)
             task.taskStatus === 'Closed' ? this.confirmDelete() : this.confirmClose(task)
         }else{
             this.noActionTaken()
@@ -71,14 +73,23 @@ export class TaskTemplateComponent {
                 this.message = 'Task Closed Successfully!';
                 this.result.next(true);
             },
-            complete: () => {
-                setTimeout(() => {
-                    this._SharedService.getAllData()
-                    this._Router.navigate(['tasks/history'])
-                }, 1200)
-            }
+            complete: () => this._SharedService.getAllData()
         })
     }
+
+    checkTaskChildren(task: Task) {
+        let taskCheckBox = document.querySelector(`#checkBox-${this.taskIndex}`) as HTMLElement;
+        let subTasks = this._SharedService.isAllowedToCloseTask(task);
+        if ( subTasks.openSubTasks || subTasks.runningSubTask){
+            this.message = 'Can`t Close This Task, Not All SubTasks are Finished';
+            this.showDialog.next(true);
+            taskCheckBox.classList.contains('checkBoxStyle') ? taskCheckBox.classList.remove('checkBoxStyle') : taskCheckBox.classList.add('checkBoxStyle')
+        }else{
+            this.closeTask();
+        }
+        
+    }
+
     confirmDelete() {
         this._TaskService.deleteTask(this.taskIndex).subscribe({
             next: (res) => {
@@ -104,5 +115,8 @@ export class TaskTemplateComponent {
         taskCheckBox.style.cssText = 'background-color: inherit; border-color: #dee2e6';
     }
 
+    toastClosed(val: boolean) {
+        if (val ) this._Router.navigate([`tasks/history`])
+    }
 }
 

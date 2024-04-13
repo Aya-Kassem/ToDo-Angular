@@ -9,11 +9,13 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import { NotFoundComponent } from './Components/not-found/not-found.component';
 import { AppSpinnerModule } from './Shared/spinner/spinner.module';
 import { TooltipModule } from 'primeng/tooltip';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

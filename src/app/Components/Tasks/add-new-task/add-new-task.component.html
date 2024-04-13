@@ -1,71 +1,123 @@
-<div class="task-component main">
-    <div class="m-auto newTask px-3">
+<section class="task-component container-fluid h-100 ">
+    <div *ngIf="isLoaded" class="newTask m-auto px-3">
         <form [formGroup]="taskForm" (ngSubmit)="createTask()" class="d-flex flex-column">
             <h4 class="main-header">Task: </h4>
-            <div class="form-control my-2">
-                <input type="text" id="taskTitle" formControlName="taskTitle" placeholder="Task Title">
-            </div>
-            <p class="mt-2 errMsg"
-                *ngIf="taskForm.get('taskTitle')?.errors != null && taskForm.get('taskTitle')?.touched">
-                Please Enter Task Title!
-            </p>
-            <div class="form-control my-2">
-                <textarea name="taskDesc" rows="4" id="taskDesc" formControlName="taskDesc"
-                    placeholder="Task Description ..."></textarea>
+
+            <!-- Title -->
+            <div class="ps-3">
+                <div
+                    class="justify-content-between my-2 form-group d-flex flex-column flex-sm-row align-items-sm-center">
+                    <label for="taskTitle" class="label mb-2 mb-sm-0">Title:</label>
+                    <input type="text" id="taskTitle" formControlName="taskTitle" placeholder="Task Title" class="px-2">
+                </div>
+                <p class="mt-2 errMsg"
+                    *ngIf="taskForm.get('taskTitle')?.errors != null && taskForm.get('taskTitle')?.touched">
+                    Please Enter Task Title!
+                </p>
             </div>
 
-            <div class=" my-2 form-group d-flex flex-column flex-sm-row align-items-sm-center">
+            <!-- Category -->
+            <div
+                class="ps-3 justify-content-between my-2 form-group d-flex flex-column flex-sm-row align-items-sm-center">
                 <label class="label mb-2 mb-sm-0" for="category">Category: </label>
-                <p-dropdown [(ngModel)]="defaultCategory" id="category" formControlName="taskCategory"
-                    [options]="categories" class="form-control"></p-dropdown>
+                <!-- [(ngModel)]="defaultCategory" -->
+                <p-dropdown id="category" formControlName="taskCategory" [options]="categories"
+                    class="form-control"></p-dropdown>
             </div>
-            <div class=" my-2 form-group d-flex flex-column  flex-sm-row align-items-sm-center"
-                *ngIf="!showStatusDropDown">
+
+            <!-- Status -->
+            <div
+                class="ps-3 my-2 justify-content-between  form-group d-flex flex-column  flex-sm-row align-items-sm-center">
                 <label class="label mb-2 mb-sm-0" for="status">Status: </label>
-                <input type="text" class="px-2 form-control statusInput" [readonly]="!showStatusDropDown" value="Open">
-            </div>
-            <div class=" my-2 form-group d-flex flex-column  flex-sm-row align-items-sm-center"
-                *ngIf="showStatusDropDown">
-                <label class="label mb-2 mb-sm-0" for="status">Status: </label>
-                <p-dropdown [(ngModel)]="defaultTaskStatus" id="status" formControlName="taskStatus" [options]="status"
-                    class="form-control">
+                <!--  [(ngModel)]="defaultTaskStatus" -->
+                <p-dropdown id="status" formControlName="taskStatus" [options]="status" class="form-control">
                 </p-dropdown>
             </div>
 
-            <div class="my-2 form-group d-flex flex-column  flex-sm-row align-items-sm-center">
+            <!-- Date -->
+            <div
+                class="ps-3 my-2 justify-content-between  form-group d-flex flex-column  flex-sm-row align-items-sm-center">
                 <label for="date" class="label mb-2 mb-sm-0">Due Date: </label>
                 <p-calendar [showIcon]="true" dateFormat="yy-m-dd" formControlName="taskDate" id="date"
-                    class="form-control" placeholder="Select Date"></p-calendar>
+                    class="form-control" placeholder="Task Date"></p-calendar>
             </div>
 
-            <h4 class="header my-3">SubTasks: </h4>
-            <div class="d-flex justify-content-center">
-                <a class="d-flex justify-content-center align-items-center addNewTask " (click)="addSubTask()">
-                    <i class="bi bi-plus"></i>
-                    Add New SubTask
-                </a>
-            </div>
-
-            <div formArrayName="subTasks">
-                <div *ngFor="let subTask of subTasks.controls; let i = index" class="form-group">
-                    <div class="input-group my-2">
-                        <input formControlName="{{i}}" class="form-control" />
-                        <button type="button" class="btn remove" (click)="removeSubTask(i)">Remove</button>
-                    </div>
+            <!-- SubTasks Header -->
+            <div>
+                <h4 class="header my-3">SubTasks: </h4>
+                <div class="ps-3 d-flex justify-content-center">
+                    <a class="d-flex justify-content-center align-items-center addNewTask " (click)="addSubTask()">
+                        <i class="bi bi-plus"></i>
+                        Add New SubTask
+                    </a>
                 </div>
             </div>
+
+            <!-- SubTasks Array -->
+            <div formArrayName="subTasks">
+                <div *ngFor="let subTask of subTasks.controls; let i = index">
+                    <div [formGroupName]="i"
+                        class="subTask px-2 py-1 d-flex justify-content-between  align-items-center my-2">
+                        <!-- SubTask Checkbox -->
+                        <input *ngIf="subTask.get('status')?.value === 'Running' "
+                            class="form-check-input me-2" (click)="subTaskStatusChange(i, 'Closed')" type="checkbox"
+                            [attr.id]="'checkBox-'+i" value="option1" pTooltip="Close">
+
+                        <!-- SubTaskTitle -->
+                        <input formControlName="title" class="form-control" [attr.title]="'title-'+i"
+                            [ngClass]="{'closedSubTasks': subTask.get('status')?.value === 'Closed' }" />
+
+                        <!-- SubTasks Actions -->
+                        <i *ngIf="subTask.get('status')?.value != 'Closed' || isNewTask"
+                            class="bi bi-x-lg subTaskIcon clickable" (click)="removeSubTask(i)" pTooltip="Remove"></i>
+
+                        <i *ngIf=" subTask.get('status')?.value != 'Running' && subTaskIndex != i && subTask.get('title')?.value != '' && !isTaskClosed "
+                            class="bi bi-skip-start-circle clickable subTaskIcon"
+                            [pTooltip]="subTask.get('status')?.value === 'Closed' ? 'ReStart' : 'Start' "
+                            (click)="subTaskStatusChange(i, 'Running')">
+                        </i>
+
+                        <!-- SubTasks Status -->
+                        <i *ngIf=" subTask.get('status')?.value === 'Running' "
+                            class="bi bi-hourglass-split subTaskIcon" [attr.status]="'status-'+i"
+                            pTooltip="Running"></i>
+                        <i *ngIf=" subTask.get('status')?.value === 'Closed' " class="bi bi-check2-circle subTaskIcon"
+                            [attr.status]="'status-'+i" pTooltip="Closed"></i>
+                        <i *ngIf=" subTask.get('status')?.value === 'Open' " class="bi bi-folder2-open subTaskIcon"
+                            [attr.status]="'status-'+i" pTooltip="Open"></i>
+                        <i *ngIf="subTaskIndex === i" class="bi bi-three-dots subTaskIcon"></i>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Form Buttons -->
+            <div class="pb-3 pb-sm-2 mt-auto d-flex justify-content-center align-items-center"
+                [ngClass]="isNewTask ? 'newTaskBtn' : 'EditTaskBtn'">
+                <button *ngIf="isNewTask" type="submit" class="btn mx-2 submit"
+                    [disabled]="!taskForm.valid">Submit</button>
+                <button *ngIf="!isNewTask " type="button" class="btn delete " (click)="deleteTask()">Delete</button>
+                <button *ngIf="!isNewTask " type="button" class="btn editTask" [disabled]="!taskForm.valid"
+                    (click)="editTask()">Save Changes</button>
+            </div>
+
+            <!-- Confirm Dialog Component -->
             <app-confirm-dialog [msg]="removeTasksMsg" [fire]="removeTaskReq" (response)="confirmTaskRemoved($event)"
                 *ngIf="removeTaskReq">
             </app-confirm-dialog>
-            <div class="pb-3 pb-sm-0 mt-auto d-flex justify-content-center align-items-center"
-                [ngClass]="newTask ? 'newTaskBtn' : 'EditTaskBtn'">
-                <button *ngIf="newTask" type="submit" class="btn mx-2 submit"
-                    [disabled]="!taskForm.valid">Submit</button>
-                <button *ngIf="!newTask" type="button" class="btn delete " (click)="deleteTask()">Delete</button>
-                <button *ngIf="!newTask" type="button" class="btn save" [disabled]="!taskForm.valid" (click)="editTask()">Save Changes</button>
-            </div>
 
-            <app-toast [msg]="message" [fire]="result" *ngIf="result.value" [type]="notification"></app-toast>
+            <!-- Toast Component -->
+            <app-toast [msg]="message" [fire]="result" *ngIf="result.value" [type]="notification"
+                (response)="toastClosed($event)">
+            </app-toast>
+            
+            <!-- Dialog Message -->
+            <app-dialog [message]="message" [isActive]="showDialog" *ngIf="showDialog.value" ></app-dialog>
         </form>
     </div>
-</div>
+
+    <div *ngIf="!isLoaded" class="d-flex h-100 w-100 justify-content-center align-items-center">
+        <app-spinner class="text-center"></app-spinner>
+    </div>
+
+</section>

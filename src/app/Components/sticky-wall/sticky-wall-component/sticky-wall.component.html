@@ -5,29 +5,28 @@
     <div class="row allNotes">
         <div class="col-sm-6 col-md-4 p-0 my-2">
             <form class="d-flex align-items-center addNote flex-column p-0 mx-1" [formGroup]="noteForm"
-                (ngSubmit)="onSubmit()">
-                <div class="heading border-bottom d-flex align-items-center justify-content-between ">
-                    <p class="saveNote m-0 p-2">Save Note</p>
+                (ngSubmit)="createNote()">
+                <div class="heading py-1 border-bottom d-flex align-items-center justify-content-between ">
+                    <p class="saveNote m-0 px-2">Write Your Notes!</p>
                     <button type="submit">
-                        <i class="bi bi-save p-2" type="submit" pTooltip="Save"></i>
+                        <i class="bi bi-save px-2" type="submit" pTooltip="Save"></i>
                     </button>
                 </div>
-                <textarea placeholder="Write Your Notes ..." class="note-description px-3 py-2"
-                    formControlName="noteBody"></textarea>
+                <div contenteditable="true" class="description note-description p-2"></div>
             </form>
         </div>
-
         <div class="col-sm-6 col-md-4 p-0 my-2" *ngFor="let note of allNotes; let i = index">
             <div class="p-0 stickyNote mx-1 d-flex flex-column">
-                <div class="noteStyle border-bottom mt-auto d-flex align-items-center justify-content-around p-1">
-                    <i class="bi bi-pencil-square" pTooltip="Edit" (click)="editNote(i)"></i>
-                    <i class="bi bi-type-bold px-1" pTooltip="Bold" (click)="boldedText($event, i)"></i>
-                    <i class="bi bi-type-italic px-1" pTooltip="Italic" (click)="italicText($event, i)"></i>
+                <div class="noteStyle border-bottom mt-auto d-flex align-items-center justify-content-between p-1">                    
+                    <div>
+                        <i class="bi bi-check-lg check px-1" [attr.id]=" 'check-'+i "></i>
+                        <div class="spinner-border d-none px-1" role="status" [attr.id]=" 'spinner-'+i "></div>
+                    </div>
                     <i class="bi bi-trash px-1" (click)="deleteNote(i)" pTooltip="delete"></i>
                 </div>
 
-                <div class="note note-description px-3 py-2" (mouseup)="getSelectedText()">
-                    {{note.noteBody}}
+                <div [attr.note]=" 'noteBody-'+i " contenteditable="true" class="note note-description px-3 py-2"
+                    (keydown)="showSpinner(i)" [innerHTML]="note.noteBody">
                 </div>
             </div>
         </div>

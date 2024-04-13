@@ -5,7 +5,8 @@ export interface Task {
     taskStatus: string,
     taskCategory: string,
     subTasks: [{
-        title: string
+        title: string,
+        status: string
     }],
     index: number
 }

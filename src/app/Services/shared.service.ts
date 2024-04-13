@@ -180,5 +180,19 @@ export class SharedService {
         
         return taskDate >= startDate && taskDate <= endDate;
     }
+    
+    isAllowedToCloseTask(task: Task){
+        const subTasks = task.subTasks;
+        let allowClose;
+        let runningSubTask;
+        let openSubTasks;
+        if(subTasks && subTasks.length){
+            runningSubTask = subTasks.find((el) => {return el.status === 'Running'});
+            openSubTasks = subTasks.find((el) => {return el.status === 'Open'});
+            allowClose = runningSubTask ? false : true;
+
+        }
+        return {'allowClose': allowClose, 'runningSubTask': runningSubTask, 'openSubTasks': openSubTasks}
+    }
 
 }

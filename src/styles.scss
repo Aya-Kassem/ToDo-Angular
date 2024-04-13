@@ -14,14 +14,15 @@ body {
     height: 100%;
 }
 
-// --navIconBgColor: rgba(247, 7, 118, .9);
-// --IconsColor: rgb(247, 7, 118);
-// --boxShadow: rgba(247, 7, 118, .2);
+//     --navIconBgColor: rgba(98,114,84, .9);
+//     --IconsColor: rgba(98,114,84,1);
+//     --boxShadow: rgba(98,114,84, .2);
+// B0578D -- 176,87,141
 :root {
-    --lightGrey: rgba(238, 238, 238, 0.4);
-    --navIconBgColor: rgba(98,114,84, .9);
-    --IconsColor: rgba(98,114,84,1);
-    --boxShadow: rgba(98,114,84, .2);
+    --lightGrey: rgba(238, 238, 238, 0.6);
+    --navIconBgColor: rgba(176,87,141, .9);
+    --IconsColor: rgba(176,87,141,1);
+    --boxShadow: rgba(176,87,141, .2);
     --headersColor: #64616c;
     --todayDateColor: rgba(98,114,84, .1)
 }
@@ -188,7 +189,8 @@ full-calendar a {
     p-dropdown .p-dropdown,
     .p-dropdown:not(.p-disabled):hover,
     .p-dropdown:not(.p-disabled).p-focus,
-    .form-control:focus {
+    .form-control:focus,
+    .form-control{
         border-color: var(--IconsColor)
     }
 
@@ -242,9 +244,6 @@ full-calendar a {
         p-calendar>span>div {
             left: -27px !important;
         }
-        // body>app-root>div>div.contentSection>app-calendar>full-calendar>div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr>div:nth-child(3)>button {
-        //     margin-top: 0;
-        // }
     }
     @media screen and (min-width: 576px) and (max-width: 767px) {
         p-calendar>span>div {
@@ -399,4 +398,28 @@ p-toast>div>p-toastitem>div {
     .searchForm > .searchParams{
         width: 70%;
     }
+}
+.p-dialog .p-dialog-header{
+    color: var(--headersColor);
+}
+.p-dialog .p-dialog-content{
+    color: var(--IconsColor);
+    font-weight: 500;
+}
+.settingForm{
+    .p-inputtext{
+        font-family: "Montserrat Alternates", sans-serif !important;
+        font-weight: 500;
+    }
+}
+
+.spinner-border {
+    --bs-spinner-width: 1rem;
+    --bs-spinner-height: 1rem;
+    --bs-spinner-vertical-align: -0.125em;
+    --bs-spinner-border-width: 0.15em;
+    --bs-spinner-animation-speed: 0.75s;
+    --bs-spinner-animation-name: spinner-border;
+    border: var(--bs-spinner-border-width) solid var(--IconsColor);
+    border-right-color: transparent;
 }

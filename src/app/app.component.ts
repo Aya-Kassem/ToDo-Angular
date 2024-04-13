@@ -32,27 +32,33 @@ export class AppComponent {
         if (!localStorage.getItem('users')) {
             localStorage.setItem('users', JSON.stringify([]));
         }
-        this._AuthService.autoLoggin();
-        this._AuthService.user.subscribe((userExist) => {
-            this.userAuthCheck = userExist && userExist.localId ? true : false
-            if (this.userAuthCheck) {
-                this._TasksService.userToken = userExist.localId
-                this._TasksService.email = userExist.email
 
-                this.isDatabaseExist(userExist.localId);
-                this._SharedService.getAllData();
-                this._UserSettingService.getUserSettings();
-            }
+        this._AuthService.autoLoggin();
+        this._AuthService.user.subscribe((userExist) => {            
+            this.userAuthCheck = userExist && userExist.localId ? true : false
+            if (this.userAuthCheck) this.isDatabaseExist(userExist.email); 
         })
+
         this.showNavbar()
         this.setSecondaryColors()
     }
 
-    isDatabaseExist(token: string) {
+    isDatabaseExist(email: string) {
         this._TasksService.userDatabaseCheck().subscribe((database: { [key: string]: any }) => {
-            if (!database || (database && !database[token])) {
+            let oldToken;
+            for(let el in database){
+                if(database[el].user.email === email){
+                    oldToken = database[el].user.id;
+                    this._TasksService.email = email;
+                    this._TasksService.userToken = oldToken;
+                }   
+            }
+            if (!database || (database && !database[oldToken])) {
                 this._TasksService.createUserDatabase()
             }
+            
+            this._SharedService.getAllData();
+            this._UserSettingService.getUserSettings();
         })
     }
 

@@ -20,8 +20,8 @@ export class AuthComponent {
     errMsg: string = '';
     getScreenWidth: BehaviorSubject<number> = new BehaviorSubject<number>(0);
     showImage: boolean = true;
-    signInbg = { 'background-image': "url('assets/images/Tablet login-amico.svg')" };
-    signUpbg = { 'background-image': "url('assets/images/Sign up-amico.svg')" };
+    signInbg = { 'background-image': "url('assets/images/Tablet login-amico.png')" };
+    signUpbg = { 'background-image': "url('assets/images/Sign up-amico.png')" };
 
     img!: HTMLElement;
     requestSend: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

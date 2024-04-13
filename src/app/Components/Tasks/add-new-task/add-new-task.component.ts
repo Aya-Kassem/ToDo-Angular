@@ -7,7 +7,7 @@ import { Task } from '../task';
 import { SharedService } from 'src/app/Services/shared.service';
 import { BehaviorSubject, catchError, switchMap, throwError } from 'rxjs';
 import { UserSettingService } from 'src/app/Services/user-setting.service';
-
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-add-new-task',
@@ -16,11 +16,8 @@ import { UserSettingService } from 'src/app/Services/user-setting.service';
 })
 export class AddNewTaskComponent {
     taskForm!: FormGroup;
-    defaultCategory: string = 'Work';
-    defaultTaskStatus: string = 'Open';
     allTasks: Task[] = [];
     selectedTask!: number;
-    newTask: boolean = true;
     categories: String[] = ['Work', 'Personal'];
     status = ['Open', 'Running', 'Closed'];
     message!: string;
@@ -28,7 +25,11 @@ export class AddNewTaskComponent {
     removeTaskReq: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     removeTasksMsg: string = 'Are You Sure You Want to Delete this Task?!'
     notification: string = 'notification';
-    showStatusDropDown: boolean = false;
+    isNewTask!: boolean;
+    isLoaded: boolean = false;
+    subTaskIndex!: number;
+    showDialog: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isTaskClosed!: boolean;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -42,7 +43,7 @@ export class AddNewTaskComponent {
 
     ngOnInit(): void {
         this._UserSettingService.categories.subscribe((res) => {
-            if(res.length){
+            if (res.length) {
                 this.categories = [...this.categories, ...res];
             }
         });
@@ -50,19 +51,23 @@ export class AddNewTaskComponent {
         this.createTaskForm();
         this.getUrlParams();
     }
+
     createTaskForm() {
         this.taskForm = this.formBuilder.group({
             taskTitle: new FormControl('', [Validators.required]),
-            taskDesc: new FormControl(''),
             taskDate: '',
-            taskCategory: new FormControl('', [Validators.required]),
+            taskCategory: new FormControl(''),
             taskStatus: '',
-            subTasks: this.formBuilder.array([] as FormControl[])
+            subTasks: this.formBuilder.array([])
         });
+
     }
+
     getPreviousUrl() {
         let previousUrl = this._ActivatedRoute.snapshot.queryParamMap.get('url');
-        this._Router.navigate([`/${previousUrl}`])
+        previousUrl = `tasks/${previousUrl}`;
+        console.log(previousUrl);
+        this._Router.navigate([previousUrl]);
         return previousUrl
     }
 
@@ -74,12 +79,13 @@ export class AddNewTaskComponent {
             var date;
             date = queryParamDate.length > 10 ? queryParamDate.split('T')[0] : queryParamDate
             this.taskForm.controls['taskDate'].setValue(date);
-            this.showStatusDropDown = true;
         } else if (queryParamIndex) {
             this.selectedTask = +queryParamIndex;
-            this.newTask = false;
+            this.isNewTask = false;
             this.getTaskByIndex(this.selectedTask);
-            this.showStatusDropDown = true;
+        } else {
+            this.isLoaded = true;
+            this.isNewTask = true;
         }
     }
 
@@ -88,18 +94,28 @@ export class AddNewTaskComponent {
     }
 
     addSubTask() {
-        this.subTasks.push(this.formBuilder.control(''));
+        const subTaskFormGroup = this.formBuilder.group({
+            title: '',
+            status: 'Open'
+        });
+        this.subTasks.push(subTaskFormGroup);
     }
 
     removeSubTask(index: number) {
         this.subTasks.removeAt(index);
     }
 
+    setDefaultValues() {
+        if (this.taskForm.controls['taskCategory'].value === '') {
+            this.taskForm.controls['taskCategory'].setValue('Work')
+        }
+        if (this.isNewTask) this.taskForm.controls['taskStatus'].setValue('Open');
+        this.taskForm.controls['taskDate'].setValue(this.changeDateFormat());
+    }
+
     createTask() {
         if (!this.taskForm.valid) return
-        this.taskForm.controls['taskDate'].setValue(this.changeDateFormat());
-        if (!this.showStatusDropDown) this.taskForm.controls['taskStatus'].setValue('Open')
-
+        this.setDefaultValues();
         this._TasksService.getallTasks().pipe(
             switchMap((tasks) => {
                 this.allTasks = tasks || [];
@@ -138,6 +154,7 @@ export class AddNewTaskComponent {
     getTaskByIndex(index: number) {
         this._TasksService.getTask(index).subscribe((task) => {
             if (task) {
+                this.isTaskClosed = task.taskStatus === 'Closed' ? true : false;
                 this.taskForm.patchValue({
                     taskTitle: task.taskTitle,
                     taskDate: task.taskDate,
@@ -147,32 +164,63 @@ export class AddNewTaskComponent {
                 });
 
                 if (task.subTasks) {
-                    task.subTasks.forEach((subTask: { title: string }) => {
-                        this.subTasks.push(this.formBuilder.control(subTask));
+                    task.subTasks.forEach((subTask: { title: string, status: string }) => {
+                        this.subTasks.push(this.formBuilder.group(subTask));
                     });
                 }
-
+                this.hideSpinner();
             }
         });
     }
 
+    hideSpinner() {
+        setTimeout(() => {
+            this.isLoaded = true;
+        }, 200)
+    }
+
     editTask() {
+        let taskStatus = this.taskForm.controls['taskStatus'].value;
+        let isAllow = this.checkTaskChildren(taskStatus);
+        if ((taskStatus === 'Closed' && isAllow) || taskStatus === 'Open' || taskStatus === 'Running') this.confirmEditTask()
+    }
+
+    toastClosed(val: boolean) {
+        if (val && !this.isNewTask) this._Router.navigate([`/${this.getPreviousUrl()}`])
+    }
+
+    confirmEditTask() {
         this.taskForm.controls['taskDate'].setValue(this.changeDateFormat());
-        this._TasksService.editTask(this.selectedTask, this.taskForm.value).subscribe({
-            next: (res) => {
-                if (res) {
-                    this.message = 'Changes Applied Successfully!';
-                    this.result.next(true);
-                }
-            },
-            error: (e) => throwError(() => new Error('Error While Updating Task: ', e)),
-            complete: () => {
-                this._SharedService.getAllData()
-                setTimeout(() => {
-                    this._Router.navigate([`/${this.getPreviousUrl()}`])
-                }, 1200)
-            }
-        });
+        if (!this.isTaskClosed || this.taskForm.controls['taskStatus'].value != 'Closed') {
+            this._TasksService.editTask(this.selectedTask, this.taskForm.value).subscribe({
+                next: (res) => {
+                    if (res) {
+                        this.message = 'Changes Applied Successfully!';
+                        this.result.next(true);
+                    }
+                },
+                error: (e) => throwError(() => new Error('Error While Updating Task: ', e)),
+                complete: () => this._SharedService.getAllData()
+            });
+        } else {
+            this.message = 'Can`t Change Closed Tasks, Please Reopen the Task First';
+            this.showDialog.next(true);
+        }
+    }
+
+    checkTaskChildren(status: string) {
+        let allowClose = true;
+        let subTasks = this._SharedService.isAllowedToCloseTask(this.taskForm.value);
+        if ( (status === 'Closed' && !this.isTaskClosed) && (subTasks.openSubTasks || subTasks.runningSubTask)) {
+            this.message = 'Can`t Close This Task, Not All SubTasks are Finished';
+            this.showDialog.next(true);
+            allowClose = false;
+        }
+
+        if(status != 'Running' && subTasks.runningSubTask ){
+            this.taskForm.controls['taskStatus'].setValue('Running');
+        }
+        return allowClose;
     }
 
     deleteTask() {
@@ -196,6 +244,26 @@ export class AddNewTaskComponent {
         }
     }
 
+    subTaskStatusChange(i: number, taskStatus: string) {
+        this.showDialogMsg(taskStatus);
+        this.subTaskIndex = i;
+        let subTaskStatus = document.querySelector(`[status=status-${i}]`) as HTMLElement;
+        subTaskStatus.style.display = 'none';
+        this.closeAndReOpenSubTasks(i,taskStatus);
+    }
+
+    closeAndReOpenSubTasks(i: number, status: string) {
+        let subTaskTitle = document.querySelector(`[title=title-${this.subTaskIndex}]`) as HTMLElement;
+        status === 'Closed' ? subTaskTitle.classList.add('closedSubTasks') : subTaskTitle.classList.remove('closedSubTasks');
+        const formArray = this.taskForm.controls['subTasks'] as FormArray;
+        formArray.controls[i].value.status = status;  
+    }
+
+    showDialogMsg(status: string) {
+        const applyChange = status === 'Closed' ? 'Close' : 'Start';
+        this.message = `Please Save Changes to ${applyChange} this SubTask`;
+        this.showDialog.next(true);
+    }
 }
 
 

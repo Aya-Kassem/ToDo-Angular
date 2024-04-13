@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UserSettingService } from 'src/app/Services/user-setting.service';
 import { TinyColor } from '@ctrl/tinycolor';
-import { MessageService } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
 import { SharedService } from 'src/app/Services/shared.service';
 import { Task } from '../../Tasks/task';
@@ -91,7 +90,11 @@ export class AppSettingComponent {
 
   setCategories(categories: String[]) {
     let newCategories = this.userCategories ? [...this.userCategories, ...categories] : [...categories];
+    console.log('this.userCategories -> ' + this.userCategories);
+    console.log('categories -> ' + categories);
+    
     let allCategories = new Set(newCategories);
+    console.log('allCategories -> ' + allCategories);
     this.categoriesExist = true;
     return this._UserSettingService.setUserSettings('categories', [...allCategories])
   }

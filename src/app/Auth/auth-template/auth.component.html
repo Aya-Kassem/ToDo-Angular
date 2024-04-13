@@ -3,7 +3,7 @@
         <div #imgContainer class="col-md-6 me-auto h-100 img_container" *ngIf="showImage"
             [ngStyle]=" templateType == 'signIn' ? signInbg : signUpbg ">
         </div>
-        <div class=" col-md-6 h-100 formCotainer py-1 d-flex flex-column">
+        <div class="col-md-6 h-100 formCotainer py-3 d-flex flex-column">
             <form #loggingForm class="loggingForm d-flex h-100 align-items-center flex-column"
                 [formGroup]="userForm" (ngSubmit)="registerUser()">
                 <h5 class="header fw-bold form-group">{{ templateType == 'signIn' ? 'Sign In' : 'Register Now' }}</h5>
