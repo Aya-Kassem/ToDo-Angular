@@ -79,13 +79,15 @@ export class AddNewTaskComponent {
             var date;
             date = queryParamDate.length > 10 ? queryParamDate.split('T')[0] : queryParamDate
             this.taskForm.controls['taskDate'].setValue(date);
+            this.isLoaded = true;
         } else if (queryParamIndex) {
             this.selectedTask = +queryParamIndex;
             this.isNewTask = false;
             this.getTaskByIndex(this.selectedTask);
         } else {
-            this.isLoaded = true;
+            console.log('else');
             this.isNewTask = true;
+            this.isLoaded = true;
         }
     }
 
@@ -168,7 +170,8 @@ export class AddNewTaskComponent {
                         this.subTasks.push(this.formBuilder.group(subTask));
                     });
                 }
-                this.hideSpinner();
+                this.isLoaded = true;
+                // this.hideSpinner();
             }
         });
     }
