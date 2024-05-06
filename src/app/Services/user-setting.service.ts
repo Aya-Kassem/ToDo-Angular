@@ -64,7 +64,8 @@ export class UserSettingService {
         let user_setting = all.filter((el: any) => el.user === this.userToken)[0];
         let default_settings = { "view": "dayGridMonth", "color": 'rgba(176,87,141,1)', "user": this.userToken, "categories": [] };
         if (!user_setting) {
-            all.push(default_settings)
+            all.push(default_settings);
+            user_setting = default_settings;
         }
         localStorage.setItem('settings', JSON.stringify(all));
         return user_setting;
