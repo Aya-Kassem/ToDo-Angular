@@ -19,7 +19,7 @@ export class UserSettingService {
         let allsettings =  JSON.parse(localStorage.getItem('settings')!);
 
         if(allsettings){
-            if (user_setting.categories.length) {
+            if (user_setting.categories) {
                 this.categories.next(user_setting.categories);
             }
     
@@ -62,7 +62,7 @@ export class UserSettingService {
         this.userToken = this._TasksService.userToken;
         let all = JSON.parse(localStorage.getItem('settings')!) || [];
         let user_setting = all.filter((el: any) => el.user === this.userToken)[0];
-        let default_settings = { "view": "dayGridMonth", "color": 'rgba(176,87,141,1)', "user": this.userToken, "categories": '[]' };
+        let default_settings = { "view": "dayGridMonth", "color": 'rgba(176,87,141,1)', "user": this.userToken, "categories": [] };
         if (!user_setting) {
             all.push(default_settings)
         }
