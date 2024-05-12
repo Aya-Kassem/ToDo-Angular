@@ -27,7 +27,6 @@ This project is a simple Todo application built with Angular 16.2.7, allowing us
   - User is able to Reset the Settings to Default Values
 
 ## Technologies Used
-
 - Angular 16.2.7
 - TypeScript 5.1.3
 - HTML/SCSS
@@ -37,15 +36,15 @@ This project is a simple Todo application built with Angular 16.2.7, allowing us
 - PrimeNG 15.4.1
 - Firebase Authentication / Realtime Database
 
+##  Display All Tasks
+![2024-05-12](https://github.com/Aya-Kassem/ToDo-Angular/assets/90005145/ac117372-d07c-442d-bbb9-6d3f0a3c558b)
 
 ## Installation
-
 1. Clone the repository: `git clone https://github.com/your-username/your-repo.git`
 2. Navigate to the project directory: `cd your-repo`
 3. Install dependencies: `npm install`
 4. Run the development server: `ng serve`
 5. Open your browser and navigate to `http://localhost:4200/`
 
-## ScreenShot Form All Tasks
-![2024-05-12](https://github.com/Aya-Kassem/ToDo-Angular/assets/90005145/ac117372-d07c-442d-bbb9-6d3f0a3c558b)
+
 
