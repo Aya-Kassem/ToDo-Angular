@@ -154,7 +154,7 @@ export class SharedService {
     getTaskBySearchParam(searchParams: any) {
         let condition = (tasks: Task) => {
             let statusMatch = searchParams.status ? tasks.taskStatus === searchParams.status : true;
-            let titleMatch = searchParams.title ? tasks.taskTitle === searchParams.title : true;
+            let titleMatch = searchParams.title ? tasks.taskTitle.toLowerCase().includes(searchParams.title.toLowerCase()) : true;
             let categoryMatch = searchParams.category ? tasks.taskCategory === searchParams.category : true;
             let dateMatch = searchParams.date ? this.checkDateInRange(tasks.taskDate, searchParams.date.start, searchParams.date.end) : true;
 

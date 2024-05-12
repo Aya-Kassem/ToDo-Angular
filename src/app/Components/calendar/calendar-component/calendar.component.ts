@@ -25,7 +25,7 @@ export class CalendarComponent {
   ) { }
 
   calendarOptions: CalendarOptions = {
-    plugins: [ dayGridPlugin, interactionPlugin, listPlugin, multiMonthPlugin ],
+    plugins: [dayGridPlugin, interactionPlugin, listPlugin, multiMonthPlugin],
     height: '100%',
     headerToolbar: {
       left: 'title',
@@ -39,9 +39,9 @@ export class CalendarComponent {
     dateClick: (info: any) => {
       this.date = info.dateStr;
       this._Router.navigate(['tasks/addNewTask'], { queryParams: { date: info.dateStr } });
-    },eventClick: (e: any) => {
-        let index = e.event.extendedProps.index;
-        this._Router.navigate(['tasks/addNewTask'], { queryParams: { index } })
+    }, eventClick: (e: any) => {
+      let index = e.event.extendedProps.index;
+      this._Router.navigate(['tasks/addNewTask'], { queryParams: { index } })
     }
 
   };
@@ -54,12 +54,12 @@ export class CalendarComponent {
   }
 
   getTasksEvents() {
-    this._SharedService.allTasksEvents.subscribe((tasks) => {      
-        tasks.map((task) => {            
-            if(task.title.length > 15){
-                task.title = task.title.slice(0, 15) + '.....'
-            }
-        })
+    this._SharedService.allTasksEvents.subscribe((tasks) => {
+      tasks.map((task) => {
+        if (task.title.length > 15) {
+          task.title = task.title.slice(0, 15) + '.....'
+        }
+      })
       this.calendarOptions.eventSources = [
         {
           events: tasks
