@@ -1,27 +1,48 @@
-# ToDo
+# Angular ToDo App ...
+This project is a simple Todo application built with Angular 16.2.7, allowing users to create, manage, and organize their tasks.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.7.
+## App Features ... 
+1- Tasks 
+  - Add new tasks, add subTasks
+  - display all tasks, today tasks, upcoming tasks and history tasks
+  - Edit existing tasks
+  - Delete tasks or close tasks
+  - Filter tasks by status, title, date and category
 
-## Development server
+2- Calendar
+  - Angular Full Calendar version 6.1.9
+  - display all tasks, every task in it`s corresponding day
+  - add new task when select a date from the calendar
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+3- Sticky Wall
+  - User can add notes as a sticky wall in the app
+  - display all notes
+  - edit existing notes
+  - delete notes
 
-## Code scaffolding
+4- Settings
+  - User is able to Add New Categories used in the tasks and Remove Existing Categories
+  - User is able to Change the App Main Color
+  - User is able to Change the Calendar View
+  - User is able to Reset the Settings to Default Values
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Technologies Used
 
-## Build
+- Angular 16.2.7
+- TypeScript 5.1.3
+- HTML/SCSS
+- Bootstrap / bootstrap-icons
+- Full Calendar 6.1.9
+- Tiny Color 3.6.1 to validate user input
+- PrimeNG 15.4.1
+- Firebase Authentication / Realtime Database
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## Installation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Clone the repository: `git clone https://github.com/your-username/your-repo.git`
+2. Navigate to the project directory: `cd your-repo`
+3. Install dependencies: `npm install`
+4. Run the development server: `ng serve`
+5. Open your browser and navigate to `http://localhost:4200/`
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
