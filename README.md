@@ -46,3 +46,6 @@ This project is a simple Todo application built with Angular 16.2.7, allowing us
 4. Run the development server: `ng serve`
 5. Open your browser and navigate to `http://localhost:4200/`
 
+## ScreenShot Form All Tasks
+![2024-05-12](https://github.com/Aya-Kassem/ToDo-Angular/assets/90005145/ac117372-d07c-442d-bbb9-6d3f0a3c558b)
+
