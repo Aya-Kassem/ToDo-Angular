@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="row taskRow pt-3" >
-        <app-task-template *ngIf="weekTasksLoaded" [tasksData]="[{ type: 'This-Week', tasks: weekTasks }]"></app-task-template>
+        <app-task-template *ngIf="weekTasksLoaded" [tasksData]="[{ type: 'This-Week', tasks: weekTasks }]" [weekRange]="{start: weekFirstDay, end:weekLastDay}"></app-task-template>
     </div>
 
 </div>

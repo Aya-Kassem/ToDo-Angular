@@ -12,14 +12,15 @@ export class UpcomingTasksComponent implements OnInit{
   weekTasksLoaded: boolean = false;
   allTasksNum: number = 0;
   isLoading: boolean = false;
-
+  weekFirstDay!: string;
+  weekLastDay!: string;
   constructor(private _SharedService:SharedService) { }
 
   ngOnInit(): void {
     this.getWeekTasks();
-    let ar = this._SharedService.getWholeWeekDates();
-    console.log(ar);
-    
+    let weekArray = this._SharedService.getWholeWeekDates();
+    this.weekFirstDay = weekArray.at(0)!.slice(5);
+    this.weekLastDay = weekArray.at(-1)!.slice(5);
   }
 
   getWeekTasks(){

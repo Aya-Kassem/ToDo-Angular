@@ -12,6 +12,8 @@ import { Task } from '../task';
 })
 export class TaskTemplateComponent {
     @Input() tasksData: { type: string, tasks: Task[] }[] = [];
+    @Input() weekRange!: {start: string, end: string};
+    
     currentUrl!: string;
     showContent: boolean = false;
     closeTaskConfirmMsg!: string;

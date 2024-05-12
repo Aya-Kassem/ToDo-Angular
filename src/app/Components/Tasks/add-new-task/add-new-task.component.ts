@@ -80,12 +80,12 @@ export class AddNewTaskComponent {
             date = queryParamDate.length > 10 ? queryParamDate.split('T')[0] : queryParamDate
             this.taskForm.controls['taskDate'].setValue(date);
             this.isLoaded = true;
+            this.isNewTask = true;
         } else if (queryParamIndex) {
             this.selectedTask = +queryParamIndex;
             this.isNewTask = false;
             this.getTaskByIndex(this.selectedTask);
         } else {
-            console.log('else');
             this.isNewTask = true;
             this.isLoaded = true;
         }
