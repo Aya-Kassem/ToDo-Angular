@@ -42,7 +42,7 @@ This project is a simple Todo application built with Angular 16.2.7, allowing us
 ## Installation
 1. Clone the repository: `git clone https://github.com/your-username/your-repo.git`
 2. Navigate to the project directory: `cd your-repo`
-3. Install dependencies: `npm install`
+3. Install dependencies: `npm install -f`
 4. Run the development server: `ng serve`
 5. Open your browser and navigate to `http://localhost:4200/`
 
