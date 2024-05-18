@@ -4,14 +4,14 @@ This project is a simple Todo application built with Angular 16.2.7, allowing us
 ## App Features ... 
 1- Tasks 
   - Add new tasks, add subTasks
-  - display all tasks, today tasks, upcoming ttoday'sand history tasks
+  - display all tasks, today tasks, upcoming and history tasks
   - Edit existing tasks
   - Delete tasks or close tasks
   - Filter tasks by status, title, date, and category
 
 2- Calendar
   - Angular Full Calendar version 6.1.9
-  - display all tasks, every task in it`s corresponding don
+  - display all tasks, every task in it`s corresponding date
   - add a new task when selecting a date from the calendar
 
 3- Sticky Wall
@@ -21,9 +21,9 @@ This project is a simple Todo application built with Angular 16.2.7, allowing us
   - delete notes
 
 4- Settings
-  - User is able to Add New Catecand in the tasks and Remove Existing Categories
-  - User is able to Change The userApp Main Color
-  - User is able to Change the Ccanew
+  - User is able to Add New Category and in the tasks and Remove Existing Categories
+  - User is able to Change The App Main Color
+  - User is able to Change the Calendar view
   - User can Reset the Settings to Default Values
 
 ## Technologies Used
