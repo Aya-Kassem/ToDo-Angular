@@ -111,7 +111,9 @@ export class AddNewTaskComponent {
         if (this.taskForm.controls['taskCategory'].value === '') {
             this.taskForm.controls['taskCategory'].setValue('Work')
         }
-        if (this.isNewTask) this.taskForm.controls['taskStatus'].setValue('Open');
+        if(this.taskForm.controls['taskStatus'].value === '' && this.isNewTask){
+            this.taskForm.controls['taskStatus'].setValue('Open');
+        }
         this.taskForm.controls['taskDate'].setValue(this.changeDateFormat());
     }
 
